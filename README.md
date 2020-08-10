@@ -1,4 +1,4 @@
-# crud
+# Vue Nuxt CRUD
 
 ## Build Setup
 
