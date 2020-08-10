@@ -140,7 +140,7 @@ export default {
       const api =
         'http://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR'
       axios.get(api).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.items = response
       })
     },
@@ -149,7 +149,7 @@ export default {
       const productsApi =
         'http://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR/products/'
       axios.get(productsApi).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.products = response.data
       })
     },
