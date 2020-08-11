@@ -1,100 +1,119 @@
 <template>
   <div>
-    <v-data-table
-      :headers="headers"
-      :items="products"
-      disable-sort
-      hide-default-footer
-      disable-pagination
-      class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-toolbar flat>
-          <div v-for="item in items" :key="item.id" class="item">
-            <v-toolbar-title>{{ item.name }}</v-toolbar-title>
-          </div>
+    <section v-if="errored">
+      <p>
+        Can't get data from API endpoint
+      </p>
+    </section>
 
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
-                >New Item</v-btn
-              >
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">New Item</span>
-              </v-card-title>
+    <section v-else>
+      <div v-if="loading">Loading...</div>
 
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="productItems.title"
-                        label="Title"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="productItems.description"
-                        label="Description"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="productItems.price"
-                        label="Price"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="productItems.category"
-                        label="Category"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="productItems.employee"
-                        label="Employee"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon small @click="deleteItem(item)">
-          mdi-delete
-        </v-icon>
-        <router-link
-          :to="{
-            name: 'details',
-            params: {
-              id: item.id,
-              title: item.data.title,
-              description: item.data.description,
-              price: item.data.price,
-              category: item.data.category,
-            },
-          }"
+      <div v-else>
+        <v-data-table
+          :headers="headers"
+          :items="products"
+          disable-sort
+          hide-default-footer
+          disable-pagination
+          class="elevation-1"
         >
-          <v-icon small class="mr-2">
-            mdi-eye-outline
-          </v-icon>
-        </router-link>
-      </template>
-    </v-data-table>
+          <template v-slot:top>
+            <v-toolbar flat>
+              <div v-for="item in items" :key="item.id" class="item">
+                <v-toolbar-title>{{ item.name }}</v-toolbar-title>
+              </div>
+
+              <v-divider class="mx-4" inset vertical></v-divider>
+              <v-spacer></v-spacer>
+              <v-dialog v-model="dialog" max-width="500px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    dark
+                    class="mb-2"
+                    v-bind="attrs"
+                    v-on="on"
+                    >New Item</v-btn
+                  >
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">New Item</span>
+                  </v-card-title>
+
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            v-model="productItems.title"
+                            label="Title"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            v-model="productItems.description"
+                            label="Description"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            v-model="productItems.price"
+                            label="Price"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            v-model="productItems.category"
+                            label="Category"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            v-model="productItems.employee"
+                            label="Employee"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="close"
+                      >Cancel</v-btn
+                    >
+                    <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-toolbar>
+          </template>
+          <template v-slot:item.actions="{ item }">
+            <v-icon small @click="deleteItem(item)">
+              mdi-delete
+            </v-icon>
+            <router-link
+              :to="{
+                name: 'details',
+                params: {
+                  id: item.id,
+                  title: item.data.title,
+                  description: item.data.description,
+                  price: item.data.price,
+                  category: item.data.category,
+                },
+              }"
+            >
+              <v-icon small class="mr-2">
+                mdi-eye-outline
+              </v-icon>
+            </router-link>
+          </template>
+        </v-data-table>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -122,6 +141,8 @@ export default {
       category: '',
       employee: '',
     },
+    loading: true,
+    errored: false,
   }),
 
   watch: {
@@ -139,19 +160,33 @@ export default {
     fetchStore() {
       const api =
         'http://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR'
-      axios.get(api).then((response) => {
-        // console.log(response)
-        this.items = response
-      })
+      axios
+        .get(api)
+        .then((response) => {
+          // console.log(response)
+          this.items = response
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => (this.loading = false))
     },
 
     fetchProducts() {
       const productsApi =
         'http://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR/products/'
-      axios.get(productsApi).then((response) => {
-        // console.log(response)
-        this.products = response.data
-      })
+      axios
+        .get(productsApi)
+        .then((response) => {
+          // console.log(response)
+          this.products = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => (this.loading = false))
     },
 
     deleteItem(item) {
@@ -163,9 +198,16 @@ export default {
         this.products.splice(index, 1)
       // console.log('deleted data')
 
-      axios.delete(productsApi + item.id).then((response) => {
-        // console.log(response)
-      })
+      axios
+        .delete(productsApi + item.id)
+        .then((response) => {
+          // console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => (this.loading = false))
     },
 
     close() {
@@ -190,6 +232,11 @@ export default {
         .then((response) => {
           // console.log(response)
         })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => (this.loading = false))
 
       this.products.push(this.productItems)
       this.close()
