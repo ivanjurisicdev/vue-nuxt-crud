@@ -10,6 +10,20 @@
       <div v-if="loading">Loading...</div>
 
       <div v-else>
+        <v-expansion-panels>
+          <v-expansion-panel v-for="product in products" :key="product.id">
+            <v-expansion-panel-header>{{
+              product.data.title
+            }}</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              {{ product.data.description }}
+              <v-icon small @click="deleteItem(product)">
+                mdi-delete
+              </v-icon>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+
         <v-data-table
           :headers="headers"
           :items="products"
