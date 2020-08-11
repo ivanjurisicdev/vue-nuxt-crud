@@ -44,7 +44,12 @@
 
 <script>
 export default {
-  props: ['id', 'title', 'description', 'price', 'category'],
+  props: {
+    title: { type: String, default: 'Some title' },
+    description: { type: String, default: 'Some description' },
+    price: { type: String, default: 'Some price' },
+    category: { type: String, default: 'Some category' },
+  },
 }
 </script>
 

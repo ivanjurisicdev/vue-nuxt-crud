@@ -155,16 +155,16 @@ export default {
     },
 
     deleteItem(item) {
-      console.log(item)
+      // console.log(item)
       const productsApi =
         'http://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR/products/'
       const index = this.products.indexOf(item)
       confirm('Are you sure you want to delete this item?') &&
         this.products.splice(index, 1)
-      console.log('deleted data')
+      // console.log('deleted data')
 
       axios.delete(productsApi + item.id).then((response) => {
-        console.log(response)
+        // console.log(response)
       })
     },
 
@@ -176,8 +176,8 @@ export default {
       const productsApi =
         'http://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR/products/'
 
-      console.log('created data')
-      console.log(this.productItems)
+      // console.log('created data')
+      // console.log(this.productItems)
 
       axios
         .post(productsApi, {
@@ -188,7 +188,7 @@ export default {
           employee: this.productItems.employee,
         })
         .then((response) => {
-          console.log(response)
+          // console.log(response)
         })
 
       this.products.push(this.productItems)
