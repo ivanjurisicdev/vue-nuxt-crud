@@ -7,7 +7,14 @@
     </section>
 
     <section v-else>
-      <div v-if="loading">Loading...</div>
+      <div v-if="loading">
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="white"
+          indeterminate
+        ></v-progress-circular>
+      </div>
 
       <div v-else>
         <v-toolbar flat>
@@ -99,11 +106,14 @@
                     <v-list-item three-line>
                       <v-list-item-content>
                         <div class="overline mb-4">
-                          {{ product.data.category }}
+                          {{ product.data.employee }}
                         </div>
-                        <v-list-item-title class="headline mb-1">{{
-                          product.data.title
-                        }}</v-list-item-title>
+                        <v-list-item-title class="headline mb-1"
+                          >{{ product.data.title }} ({{
+                            product.data.category
+                          }})
+                        </v-list-item-title>
+
                         <br /><br />
                         <v-list-item-subtitle
                           >{{ product.data.description }}... There are many
@@ -118,11 +128,11 @@
                         </div>
                       </v-list-item-content>
 
-                      <v-list-item-avatar
-                        tile
-                        size="80"
-                        color="grey"
-                      ></v-list-item-avatar>
+                      <v-list-item-avatar tile size="80">
+                        <v-img
+                          src="https://images2.minutemediacdn.com/image/upload/c_crop,h_842,w_1500,x_0,y_88/f_auto,q_auto,w_1100/v1555006794/shape/mentalfloss/istock-522735736.jpg"
+                        ></v-img>
+                      </v-list-item-avatar>
                     </v-list-item>
 
                     <v-card-actions>
@@ -170,7 +180,7 @@
           >
             <v-expansion-panel-header>
               <v-row align="center" class="spacer" no-gutters>
-                <v-col cols="4" sm="2" md="1">
+                <v-col cols="4" sm="2" md="1" class="hidden-sm-and-down">
                   <v-avatar size="36px">
                     <img
                       alt="Avatar"
@@ -179,9 +189,9 @@
                   </v-avatar>
                 </v-col>
 
-                <v-col class="hidden-xs-only" sm="5" md="3">
+                <v-col sm="5" md="3">
                   <strong v-html="product.data.title"></strong>
-                  <span class="grey--text">
+                  <span class="grey--text hidden-sm-and-down">
                     &nbsp;({{ product.data.category }})
                   </span>
                 </v-col>
@@ -192,23 +202,44 @@
 
                 <v-col
                   v-if="product.data.category"
-                  class="grey--text text-truncate hidden-sm-and-down"
+                  class="grey--text text-truncate"
                 >
-                  Price: {{ product.data.price }} €
+                  <span class="hidden-sm-and-down">Price:</span>
+                  {{ product.data.price }} €
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
 
             <v-expansion-panel-content>
               <v-divider></v-divider>
-              <v-card-text v-text="product.data.description">
-                <span
-                  >... There are many variations of passages of Lorem Ipsum
-                  available, but the majority have suffered alteration in some
-                  form, by injected humour, or randomised words which don't look
-                  even slightly believable.</span
-                >
+              <v-card-text>
+                {{ product.data.description }}... There are many variations of
+                passages of Lorem Ipsum available, but the majority have
+                suffered alteration in some form, by injected humour, or
+                randomised words which don't look even slightly believable
               </v-card-text>
+
+              <router-link
+                :to="{
+                  name: 'details',
+                  params: {
+                    id: product.id,
+                    title: product.data.title,
+                    description: product.data.description,
+                    price: product.data.price,
+                    category: product.data.category,
+                  },
+                }"
+              >
+                <v-btn text>
+                  Read more
+                </v-btn>
+              </router-link>
+              <a href="javascript:void" @click.prevent="deleteItem(product)">
+                <v-btn text>
+                  Delete
+                </v-btn>
+              </a>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -398,5 +429,12 @@ a {
 .panel-layout.active {
   opacity: 1;
   visibility: visible;
+}
+
+.v-progress-circular {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

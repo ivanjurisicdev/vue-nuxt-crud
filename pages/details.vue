@@ -9,9 +9,6 @@
         </h1>
 
         <div class="image">
-          <p class="price">
-            <span>{{ $route.params.price }} €</span>
-          </p>
           <img
             src="https://images2.minutemediacdn.com/image/upload/c_crop,h_842,w_1500,x_0,y_88/f_auto,q_auto,w_1100/v1555006794/shape/mentalfloss/istock-522735736.jpg"
           />
@@ -68,22 +65,6 @@ export default {
 
 .image {
   position: relative;
-}
-
-.price {
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  top: -32px;
-  right: -32px;
-  background: white;
-  border: 1px solid black;
-  color: black;
-  border-radius: 100%;
-  padding: 16px;
-  font-size: 14px;
-  line-height: 1.5;
-  font-weight: 700;
 }
 
 .price span {

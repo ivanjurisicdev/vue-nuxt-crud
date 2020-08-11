@@ -21,4 +21,11 @@ export default {
   max-width: 600px;
   margin: 0 auto;
 }
+
+.v-progress-circular {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
