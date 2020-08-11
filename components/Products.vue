@@ -22,6 +22,29 @@
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
                 >New Item</v-btn
               >
+              <v-btn
+                color="primary"
+                dark
+                class="mb-2"
+                @click="toggleGrid"
+                :class="{ active: activeGrid }"
+              >
+                <v-icon small>
+                  mdi-apps
+                </v-icon></v-btn
+              >
+
+              <v-btn
+                color="primary"
+                dark
+                class="mb-2"
+                @click="togglePanel"
+                :class="{ active: activePanel }"
+              >
+                <v-icon small>
+                  mdi-view-sequential
+                </v-icon></v-btn
+              >
             </template>
             <v-card>
               <v-card-title>
@@ -251,7 +274,7 @@ export default {
       category: '',
       employee: '',
     },
-    defaultProducts: {
+    defaultProduct: {
       title: '',
       description: '',
       price: '',
@@ -261,6 +284,8 @@ export default {
 
     loading: true,
     errored: false,
+    activeGrid: false,
+    activePanel: false,
   }),
 
   watch: {
@@ -331,7 +356,7 @@ export default {
     close() {
       this.dialog = false
       this.$nextTick(() => {
-        this.productItems = Object.assign({}, this.defaultProducts)
+        this.productItems = Object.assign({}, this.defaultProduct)
       })
     },
 
@@ -361,6 +386,13 @@ export default {
 
       this.products.push(this.productItems)
       this.close()
+    },
+
+    toggleGrid() {
+      this.activeGrid = !this.activeGrid
+    },
+    togglePanel() {
+      this.activePanel = !this.activePanel
     },
   },
 }
