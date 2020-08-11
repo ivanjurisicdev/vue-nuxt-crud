@@ -12,7 +12,9 @@
           <p class="price">
             <span>{{ $route.params.price }} €</span>
           </p>
-          <img src="~/assets/candy-shop.jpg" />
+          <img
+            src="https://images2.minutemediacdn.com/image/upload/c_crop,h_842,w_1500,x_0,y_88/f_auto,q_auto,w_1100/v1555006794/shape/mentalfloss/istock-522735736.jpg"
+          />
         </div>
         <p>
           {{ $route.params.description }}...
