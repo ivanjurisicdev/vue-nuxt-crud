@@ -58,9 +58,11 @@ export default {
 </script>
 
 <style scoped>
-canvas {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+@media only screen and (min-width: 600px) {
+  canvas {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 </style>

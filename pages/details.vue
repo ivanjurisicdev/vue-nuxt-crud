@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$route.params.title" class="product-detail">
+    <div class="product-detail">
       <div class="container">
         <h1 class="main-title">
           {{ $route.params.title }} (
@@ -36,8 +36,6 @@
         </p>
       </div>
     </div>
-
-    <h1 v-else class="empty">Go back to list</h1>
   </div>
 </template>
 
@@ -77,12 +75,5 @@ export default {
 img {
   width: 100%;
   margin-bottom: 32px;
-}
-
-.empty {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 </style>
