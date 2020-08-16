@@ -27,13 +27,13 @@
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn dark v-bind="attrs" v-on="on">New Item</v-btn>
-              <v-btn dark @click="toggleGrid" :class="{ active: activeGrid }">
+              <v-btn dark :class="{ active: activeGrid }" @click="toggleGrid">
                 <v-icon small>
                   mdi-apps
                 </v-icon></v-btn
               >
 
-              <v-btn dark @click="togglePanel" :class="{ active: activePanel }">
+              <v-btn dark :class="{ active: activePanel }" @click="togglePanel">
                 <v-icon small>
                   mdi-view-sequential
                 </v-icon></v-btn
@@ -72,10 +72,12 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
+                      <v-select
                         v-model="productItems.employee"
+                        :items="employeeItems"
+                        filled
                         label="Employee"
-                      ></v-text-field>
+                      ></v-select>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -265,6 +267,7 @@ export default {
     ],
     items: [],
     products: [],
+    employeeItems: [],
     productItems: {
       title: '',
       description: '',
@@ -294,6 +297,7 @@ export default {
 
   created() {
     this.fetchStore()
+    this.fetchEmployees()
     this.fetchProducts()
   },
 
@@ -312,6 +316,17 @@ export default {
           this.errored = true
         })
         .finally(() => (this.loading = false))
+    },
+
+    fetchEmployees() {
+      axios
+        .get(
+          'http://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR'
+        )
+        .then((response) => {
+          // console.log(response.data.employees)
+          this.employeeItems = response.data.employees
+        })
     },
 
     fetchProducts() {
