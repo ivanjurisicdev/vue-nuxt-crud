@@ -63,6 +63,7 @@
                       <v-text-field
                         v-model="productItems.data.price"
                         label="Price"
+                        @keypress="isNumber($event)"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
@@ -380,7 +381,7 @@ export default {
       })
     },
 
-    save(item) {
+    save() {
       const productsApi =
         'http://us-central1-test-b7665.cloudfunctions.net/api/stores/ijpxNJLM732vm8AeajMR/products/'
 
@@ -406,6 +407,20 @@ export default {
 
       this.products.push(this.productItems)
       this.close()
+    },
+
+    isNumber(evt) {
+      evt = evt || window.event
+      const charCode = evt.which ? evt.which : evt.keyCode
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault()
+      } else {
+        return true
+      }
     },
 
     toggleGrid() {
