@@ -49,31 +49,31 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="productItems.title"
+                        v-model="productItems.data.title"
                         label="Title"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="productItems.description"
+                        v-model="productItems.data.description"
                         label="Description"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="productItems.price"
+                        v-model="productItems.data.price"
                         label="Price"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="productItems.category"
+                        v-model="productItems.data.category"
                         label="Category"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-select
-                        v-model="productItems.employee"
+                        v-model="productItems.data.employee"
                         :items="employeeItems"
                         filled
                         label="Employee"
@@ -269,18 +269,25 @@ export default {
     products: [],
     employeeItems: [],
     productItems: {
-      title: '',
-      description: '',
-      price: '',
-      category: '',
-      employee: '',
+      id: '',
+      data: {
+        title: '',
+        description: '',
+        price: '',
+        category: '',
+        employee: '',
+      },
     },
+
     defaultProduct: {
-      title: '',
-      description: '',
-      price: '',
-      category: '',
-      employee: '',
+      id: '',
+      data: {
+        title: '',
+        description: '',
+        price: '',
+        category: '',
+        employee: '',
+      },
     },
 
     loading: true,
@@ -382,11 +389,11 @@ export default {
 
       axios
         .post(productsApi, {
-          title: this.productItems.title,
-          description: this.productItems.description,
-          price: this.productItems.price,
-          category: this.productItems.category,
-          employee: this.productItems.employee,
+          title: this.productItems.data.title,
+          description: this.productItems.data.description,
+          price: this.productItems.data.price,
+          category: this.productItems.data.category,
+          employee: this.productItems.data.employee,
         })
         .then((response) => {
           // console.log(response)
